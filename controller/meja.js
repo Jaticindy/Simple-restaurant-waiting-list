@@ -7,7 +7,7 @@ const postMeja = ((req, res) => {
     db.query('SELECT COUNT(*) as total_meja FROM meja WHERE status_meja = ?', ['terisi'], (err, result) => {
       if (err) {
         console.error(err);
-        res.status(500).send('Internal Server Error');
+        respons(500,err,"Internal Server Error",res)
       } else {
         const total_meja_tersedia = result[0].total_meja;
         const max_kapasitas = 3;
@@ -17,10 +17,20 @@ const postMeja = ((req, res) => {
         } else {
           db.query('INSERT INTO meja (nomor_meja, kapasitas, status_meja) VALUES (?, ?, ?)', [nomor_meja, kapasitas,'terisi'], (err, result) => {
             if (err) {
-              console.error(err);
-              res.status(500).send('Internal Server Error');
+              console.log(err)
+              const error = {
+                code:err.code,
+                message:err.sqlMessage
+              }
+              respons(500,error,"Meja Telah Terisi",res)
             } else {
-              res.status(201).send('Meja berhasil di input');
+              const hasil = {
+                affectedRows : result.affectedRows,
+                insertId : result.insertId,
+                serverStatus : result.serverStatus,
+                protocol41 : result.protocol41
+              }
+              respons(201,hasil,"Meja berhasil diinput",res)
             }
           });
         }
@@ -38,8 +48,8 @@ const postMeja = ((req, res) => {
       return res.status(400).json({ error: "Bad Request" });
     }
   
-    const sql = `UPDATE meja SET nomor_meja = ?, kapasitas = ?, status_meja = ? WHERE id_meja = ?`
-    const values = [nomor_meja, kapasitas, 'tersedia', id]
+    const sql = `UPDATE meja SET nomor_meja = ?, kapasitas = ?, status_meja = ?`
+    const values = [nomor_meja, kapasitas, 'tersedia',]
     
   
     db.query(sql, values, (error, result) => {
@@ -61,15 +71,15 @@ const postMeja = ((req, res) => {
   
   const deleteMeja= (req, res) => {
     const id = req.params.id;
-    db.query('DELETE FROM meja WHERE id_meja = ?', id, (err, result) => {
+    db.query('DELETE FROM meja WHERE nomor_meja = ?', id, (err, result) => {
       if (err) {
         console.error(err);
         res.status(500).send('Internal Server Error');
       } else {
         if (result.affectedRows === 0) {
-          res.status(404).send('Meja not found');
+          respons(404,"","Merja not found",res)
         } else {
-          res.send('Meja deleted successfully');
+          respons(200,"",'Meja deleted successfully',res)
         }
       }
     })

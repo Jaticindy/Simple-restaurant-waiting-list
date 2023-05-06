@@ -10,16 +10,16 @@ const { route } = require('./pesanan')
 router.get('/meja',KasirController.getMeja)
 
 // Get all kasir
-router.get ('/',KasirController.getKasir)
+router.get ('/',auth,KasirController.getKasir)
   
 //get menu all
 router.get ('/menu',KasirController.getMenu)
 
  //get TotalHarga
- router.get ('/:id_meja/total_harga',KasirController.getTotalHarga)
+ router.get ('/:nomor_meja/total_harga',KasirController.getTotalHarga)
 
 //Post Pembayaran
-router.post ('/:id_meja/pembayaran',KasirController.postPembayaran)
+router.post ('/:nomor_meja/pembayaran',KasirController.postPembayaran)
 
 //Post Registrasi
 router.post('/registrasi',KasirController.postRegistrasi)

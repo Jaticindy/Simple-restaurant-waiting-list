@@ -11,7 +11,7 @@ const controlerPesanan = require ('../controller/pesanan')
     router.post('/',controlerPesanan.postPesanan)
     
     // Delete pesanan
-    router.delete('/:id',controlerPesanan.deletePesanan)
+    router.delete('/:nomor_meja',controlerPesanan.deletePesanan)
 
 
 module.exports = router

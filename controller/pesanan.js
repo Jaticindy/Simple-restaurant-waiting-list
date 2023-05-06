@@ -15,18 +15,18 @@ const getPesanan= (req, res) => {
 
   
   const postPesanan = (req, res) => {
-    const { id_meja, pesanan, id_kasir } = req.body;
+    const { nomor_meja, pesanan, id_kasir } = req.body;
   
     // Periksa apakah semua field pada body request tersedia
-    if (!id_meja || !pesanan || !id_kasir) {
+    if (!nomor_meja || !pesanan || !id_kasir) {
       respons(400,error,'Bad Request',res)
       return 
     }
   
-    // Query untuk memeriksa apakah id_meja valid
-    const checkMejaQuery = `SELECT * FROM meja WHERE id_meja = ?`;
+    // Query untuk memeriksa apakah nomor_meja valid
+    const checkMejaQuery = `SELECT * FROM meja WHERE nomor_meja = ?`;
   
-    db.query(checkMejaQuery, [id_meja], (error, mejaResults) => {
+    db.query(checkMejaQuery, [nomor_meja], (error, mejaResults) => {
       if (error) {
         console.error('Error executing query:', error);
         return res.status(500).json({ error: 'Internal Server Error' });
@@ -36,7 +36,7 @@ const getPesanan= (req, res) => {
         return res.status(404).json({ error: 'Meja not found' });
       }
   
-      let insertQuery = `INSERT INTO pesanan (id_meja, id_menu, jumlah_pesanan, harga_satuan, total_harga, id_kasir) VALUES `
+      let insertQuery = `INSERT INTO pesanan (nomor_meja, id_menu, jumlah_pesanan, harga_satuan, total_harga, id_kasir) VALUES `
       let insertValues = [];
   
       // Loop through each pesanan in the request body
@@ -60,7 +60,7 @@ const getPesanan= (req, res) => {
           const total_harga = harga * jumlah_pesanan;
   
           insertQuery += `(?, ?, ?, ?, ?, ?),`;
-          insertValues.push(id_meja, id_menu, jumlah_pesanan, harga, total_harga, id_kasir);
+          insertValues.push(nomor_meja, id_menu, jumlah_pesanan, harga, total_harga, id_kasir);
   
           // Check if this is the last pesanan in the array
           if (pesanan.indexOf(pesananItem) === pesanan.length - 1) {
@@ -91,24 +91,34 @@ const getPesanan= (req, res) => {
 
   
 const deletePesanan = (req, res) => {
-    const id = req.params.id;
+    const id = req.params.nomor_meja;
   
     // Query SQL untuk menghapus data pesanan dan meja yang terkait
     const sql = `
       DELETE pesanan, meja FROM pesanan
-      JOIN meja ON pesanan.id_meja = meja.id_meja
-      WHERE meja.id_meja = ? AND pesanan.status = 'SELESAI'
+      JOIN meja ON pesanan.nomor_meja = meja.nomor_meja
+      WHERE meja.nomor_meja = ? AND pesanan.status = 'SELESAI'
     `;
   
     db.query(sql, id, (error, result) => {
       if (error) {
         console.error(error);
-        res.status(500).send('Internal Server Error');
+        respons(500,"",'Internal Server Error',res)
       } else {
+       
         if (result.affectedRows === 0) {
-          res.status(404).send('Pesanan not found');
+         
+          const errPesanan = {
+            affectedRows:result.affectedRows,
+            insertId :result.insertId
+          }
+          respons(404,errPesanan,"Pesanan not found",res)
         } else {
-          res.send('Pesanan and related meja deleted successfully');
+          const resPesanan = {
+            affectedRows:result.affectedRows,
+            insertId :result.insertId
+          }
+          respons (200,resPesanan,'Pesanan and related meja deleted successfully',res)
         }
       }
     })

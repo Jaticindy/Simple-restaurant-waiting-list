@@ -8,7 +8,7 @@ const uploads = require ('../controller/menu')
 
 
 // post menu
-router.post ('/',uploads.upload ,controlerMenu.postMenu)
+router.post ('/',uploads.upload,controlerMenu.postMenu)
 
 //Put Menu
 router.put('/edit/:id',controlerMenu.putMenu)
