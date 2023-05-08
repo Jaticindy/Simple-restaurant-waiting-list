@@ -9,7 +9,7 @@ const controlermeja= require ('../controller/meja')
 router.post ('/upload',controlermeja.postMeja)
 
 //put
-router.put ('/edit/:id',controlermeja.putMeja)
+router.put ('/edit/:nomor_meja',controlermeja.putMeja)
 
 // Delete
 router.delete('/:id',controlermeja.deleteMeja)

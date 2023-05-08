@@ -103,13 +103,15 @@ const respons = require ('../respons')
           const total_harga = results[0].total_harga;
     
           // Query untuk mengambil jam masuk dan nama pesanan berdasarkan nomor_meja
-          const QueryNamaPesanan = `
-            SELECT menu.nama_menu, SUM(pesanan.jumlah_pesanan) AS jumlah_pesanan
-            FROM pesanan
-            JOIN menu ON pesanan.id_menu = menu.id_menu
-            WHERE pesanan.nomor_meja = ?
-            GROUP BY menu.nama_menu;
-          `;
+           // Query untuk mengambil jam masuk dan nama pesanan beserta harga satuan berdasarkan nomor_meja
+      const QueryNamaPesanan = `
+      SELECT menu.nama_menu, menu.harga, SUM(pesanan.jumlah_pesanan) AS jumlah_pesanan, (menu.harga * SUM(pesanan.jumlah_pesanan)) AS total_harga
+      FROM pesanan
+      JOIN menu ON pesanan.kode_menu = menu.kode_menu
+      WHERE pesanan.nomor_meja = ?
+      GROUP BY menu.nama_menu;
+      
+      `;
     
           db.query(QueryNamaPesanan, [nomor_meja], (error, results) => {
             if (error) {
@@ -118,9 +120,19 @@ const respons = require ('../respons')
               return  respons(500,'Server Error',"Internal Server Error",res)
             }
     
-            const nama_pesanan = results.map(result => result.nama_menu);
+            const nama_pesanan = results.map(result => ({
+                nama_menu: result.nama_menu,
+                harga_satuan: result.harga,
+                jumlah_pesanan: result.jumlah_pesanan,
+              }));
             const all = ({nama_pesanan,total_harga});
             console.log(nama_pesanan)
+
+            // const nama_pesanan = results.map(result => ({
+            //   nama_menu: result.nama_menu,
+            //   harga_satuan: result.harga,
+            //   jumlah_pesanan: result.jumlah_pesanan,
+            // }));
     
             // Mengembalikan total harga, jam masuk, dan nama pesanan dalam response dengan status code 200
             respons(200,all,"Success",res)
@@ -161,9 +173,12 @@ const respons = require ('../respons')
       
           // Query untuk mengubah status pesanan menjadi 'SELESAI' dan menyimpan waktu pembayaran
           const updatePesananQuery = `
-            UPDATE pesanan
-            SET status = 'SELESAI', waktu_pembayaran = NOW()
-            WHERE nomor_meja = ?
+          UPDATE pesanan
+          JOIN record ON pesanan.nomor_meja = record.nomor_meja
+          SET pesanan.status = 'SELESAI', pesanan.waktu_pembayaran = NOW(),
+              record.status = 'SELESAI', record.waktu_pembayaran = NOW()
+          WHERE pesanan.nomor_meja = ?;
+          
           `;
       
           db.query(updatePesananQuery, [nomor_meja], (error, results) => {

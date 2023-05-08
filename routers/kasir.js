@@ -1,6 +1,7 @@
 const express = require ('express')
 const router = express.Router()
 const basicAuth = require ('basic-auth')
+
 const auth = require ('../middleware/loges')
 const KasirController= require ('../controller/kasir')
 const { route } = require('./pesanan')
