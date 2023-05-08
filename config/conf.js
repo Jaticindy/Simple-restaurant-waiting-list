@@ -2,7 +2,7 @@ const mysql = require ('mysql')
 
 const db= mysql.createConnection({
     host:process.env.DB_HOST,
-    user: 'root',
+    user: process.env.DB_USERNAME,
     password:process.env.DB_PASS,
     database: process.env.DB_DATABASE
 })
