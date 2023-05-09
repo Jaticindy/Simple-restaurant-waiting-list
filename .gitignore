@@ -6,3 +6,4 @@ node_modules/
 final_projects.sql
 mysql.sql
 .gitignore
+.env

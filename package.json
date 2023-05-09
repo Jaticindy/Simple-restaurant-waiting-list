@@ -2,6 +2,7 @@
   "name": "final_project",
   "version": "1.0.0",
   "description": "Final_Project 'Usaha rumah makan'",
+  "start":"node index.js",
   "main": "nodemon index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
