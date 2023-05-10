@@ -105,10 +105,11 @@ const respons = require ('../respons')
            // Query untuk mengambil jam masuk dan nama pesanan beserta harga satuan berdasarkan nomor_meja
       const QueryNamaPesanan = `
       SELECT menu.nama_menu, menu.harga, SUM(pesanan.jumlah_pesanan) AS jumlah_pesanan, (menu.harga * SUM(pesanan.jumlah_pesanan)) AS total_harga
-      FROM pesanan
-      JOIN menu ON pesanan.kode_menu = menu.kode_menu
-      WHERE pesanan.nomor_meja = ?
-      GROUP BY menu.nama_menu;
+FROM pesanan
+JOIN menu ON pesanan.kode_menu = menu.kode_menu
+WHERE pesanan.nomor_meja = ?
+GROUP BY menu.nama_menu, menu.harga;
+
       
       `;
     
