@@ -2,13 +2,13 @@
 Ini adalah sistem manajemen restoran sederhana yang dibangun menggunakan Node.js dan MySQL. Sistem ini memungkinkan pengguna untuk mengelola meja, menu, pesanan, dan status pesanan dalam sebuah restoran.
 
 # Daftar Isi
-# Instalasi
-Konfigurasi Database
-Menjalankan Aplikasi
-Endpoint API
-Penggunaan
-Kontribusi
-Lisensi
+- Instalasi
+- Konfigurasi Database
+- Menjalankan Aplikasi
+- Endpoint API
+- Penggunaan
+- Kontribusi
+- Lisensi
 
 Instalasi
 Clone repositori ini:
