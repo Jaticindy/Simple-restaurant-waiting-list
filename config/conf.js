@@ -1,24 +1,3 @@
-// const mysql = require ('mysql')
-
-// const db= mysql.createConnection({
-    
-//     host: "containers-us-west-66.railway.app",
-//     user: "root",
-//     password: "5ExjkHXc60NHg72tngP6",
-//     database: "railway"
-// })
-// // process.env.DB_DATABASE
-
-// db.connect((err) => {
-//     if(err) {
-//         console.log('Koneksi gagal:', err);
-//     } else {
-//         console.log('Koneksi berhasil!');
-//     }
-// });
-
-// module.exports=db
-
 
 var mysql = require('mysql2')
 
@@ -39,6 +18,9 @@ db.connect((err) => {
   }
 });
 
+
 module.exports = db;
 
 
+
+module.exports=db
