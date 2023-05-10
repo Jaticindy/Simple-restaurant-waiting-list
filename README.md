@@ -1,8 +1,8 @@
-Restaurant Management System
+# Restaurant Management System
 Ini adalah sistem manajemen restoran sederhana yang dibangun menggunakan Node.js dan MySQL. Sistem ini memungkinkan pengguna untuk mengelola meja, menu, pesanan, dan status pesanan dalam sebuah restoran.
 
-Daftar Isi
-Instalasi
+# Daftar Isi
+# Instalasi
 Konfigurasi Database
 Menjalankan Aplikasi
 Endpoint API
@@ -20,7 +20,7 @@ cd restaurant-management-system
 Install dependencies dengan menggunakan npm:
 npm install
 
-Konfigurasi Database
+# Konfigurasi Database
 Buat file konfigurasi database dengan nama config.js dalam direktori config. Contoh isi file konfigurasi:
 
 var db = mysql.createConnection({
@@ -34,11 +34,12 @@ var db = mysql.createConnection({
 Pastikan untuk mengganti username, password, dan nama_database dengan informasi yang sesuai.
 
 Import file database.sql ke dalam database MySQL untuk membuat skema dan tabel yang diperlukan.
-Menjalankan Aplikasi
+
+# Menjalankan Aplikasi
 npm start
 Aplikasi akan berjalan pada http://localhost:3000.
 
-Endpoint API
+# Endpoint API
 Berikut ini adalah daftar endpoint API yang tersedia:
 
 GET /pesanan - Mendapatkan daftar pesanan
@@ -61,7 +62,7 @@ PUT /menu/:id_menu - Mengubah menu
 
 DELETE /menu/:id_menu - Menghapus menu berdasarkan ID menu
 
-Penggunaan
+# Penggunaan
 Untuk menambahkan pesanan, gunakan endpoint POST /pesanan dengan body request yang sesuai.
 Untuk mengubah status meja, gunakan endpoint PUT /meja/:nomor_meja dengan body request yang sesuai.
 Untuk menghapus meja, gunakan endpoint DELETE /meja/:nomor_meja.
@@ -70,5 +71,5 @@ Untuk menghapus menu, gunakan endpoint DELETE /menu/:id_menu.
 Kontribusi
 Kontribusi terbuka untuk siapa saja yang ingin meningkatkan proyek ini. Silakan buat pull request dengan perubahan Anda.
 
-Lisensi
+# Lisensi
 Proyek
