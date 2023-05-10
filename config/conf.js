@@ -20,7 +20,7 @@
 // module.exports=db
 
 
-var mysql = require('mysql');
+var mysql = require('mysql2')
 
 var db = mysql.createConnection({
   host: process.env.DB_HOST ,
@@ -28,7 +28,8 @@ var db = mysql.createConnection({
   password: process.env.DB_PASSWORD,
   port: process.env.DB_PORT,
   database: process.env.DB_NAME
-});
+})
+console.log(db)
 
 db.connect((err) => {
   if (err) {

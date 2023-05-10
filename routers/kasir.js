@@ -7,11 +7,12 @@ const KasirController= require ('../controller/kasir')
 const { route } = require('./pesanan')
 
 
+
 // Get all meja
 router.get('/meja',KasirController.getMeja)
 
 // Get all kasir
-router.get ('/',auth,KasirController.getKasir)
+router.get ('/',KasirController.getKasir)
   
 //get menu all
 router.get ('/menu',KasirController.getMenu)
