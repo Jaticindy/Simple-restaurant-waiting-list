@@ -17,6 +17,17 @@ app.use ('/meja',MejaRouter)
 app.use ('/menu',CostRouter)
 app.use ('/pesanan',PesananRouter)
 app.use ('/status',StatusRouter)
+
+app.use('/',(req,res)=>{
+
+    res.json({
+        'Message' : 'OK',
+        'Status':'API is running'
+    })
+})
+
+
+
   
 
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`))
