@@ -11,7 +11,7 @@ const { route } = require('./pesanan')
 router.get('/meja',KasirController.getMeja)
 
 // Get all kasir
-router.get ('/',auth,KasirController.getKasir)
+router.get ('/',KasirController.getKasir)
   
 //get menu all
 router.get ('/menu',KasirController.getMenu)
