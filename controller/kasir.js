@@ -23,43 +23,42 @@ const respons = require ('../respons')
   }
 
     //controller getKasir
-    const getKasir = (req,res)=>{
-        const sql = `SELECT id_kasir, nama_kasir,telepon_kasir, alamat_kasir FROM kasir`
-        console.log('Get is Running..')
+    const getKasir = (req, res) => {
+      const sql = `select * from kasir`;
+      console.log('Get is Running..');
     
-        db.query (sql,(error,result)=>{
-            if(error){
-                console.log(error)
-                respons(404,error,'Server Not Found',res)
-                return
-            }
-            if(result.length == 0){
-                respons(401,'No Data Found',"Unauthorized",res)
-                return
-            }
-            respons(200,result,'Get in Kasir',res)
-        })
-    }
-
-    // controller get menu all
-    const getMenu= (req,res)=>{
+      db.query(sql, (error, result) => {
+        if (error) {
+          console.log(error);
+          respons(404, error, 'Server Not Found', res);
+          return;
+        }
+        if (result.length == 0) {
+          respons(401, 'No Data Found', 'Unauthorized', res);
+          return;
+        }
+        respons(200, result, 'Get in Kasir', res);
+      });
+    };
     
-        const sql = `SELECT *FROM menu`
-        console.log('Get is Running..')
+    const getMenu = (req, res) => {
+      const sql = `SELECT * FROM menu`;
+      console.log('Get is Running..');
     
-        db.query (sql,(error,result)=>{
-            if(error){
-                console.log(error)
-                respons(404,error,'Server Not Found',res)
-                return
-            }
-            if(result.length == 0){
-                respons(401,'No Data Found',"Unauthorized",res)
-                return
-            }
-            respons(200,result,'Get in Menu',res)
-        })
-    }
+      db.query(sql, (error, result) => {
+        if (error) {
+          console.log(error);
+          respons(404, error, 'Server Not Found', res);
+          return;
+        }
+        if (result.length == 0) {
+          respons(401, 'No Data Found', 'Unauthorized', res);
+          return;
+        }
+        respons(200, result, 'Get in Menu', res);
+      });
+    };
+    
 
     //gET Total Harga
 
@@ -197,57 +196,56 @@ const respons = require ('../respons')
       }
 
       //Post Registrasi Kasir
-      const postRegistrasi= (req,res)=>{
-        const {nama_kasir, alamat_kasir, telepon_kasir,password}=req.body
+      const postRegistrasi = (req, res) => {
+        const { nama_kasir, alamat_kasir, telpon_kasir, password } = req.body;
     
-        const sql = `INSERT INTO kasir (nama_kasir,password, alamat_kasir, telepon_kasir) 
-        VALUES ('${nama_kasir}','${password}', '${alamat_kasir}', '${telepon_kasir}')`;
+        const sql = `INSERT INTO kasir (nama_kasir, alamat_kasir, telpon_kasir, password) 
+                    VALUES (?, ?, ?, ?)`;
+        const values = [nama_kasir, alamat_kasir, telpon_kasir, password];
     
-    
-        if (Object.entries (req.body).length !==4 ||
-        !("nama_kasir" in req.body) ||
-        !("password" in req.body) ||
-        !("alamat_kasir" in req.body) ||
-        !("telepon_kasir" in req.body)
-        ){
-       respons(400 ,"Bad Request ","Unauthorized",res)
-        return  
+        if (Object.entries(req.body).length !== 4 ||
+            !("nama_kasir" in req.body) ||
+            !("alamat_kasir" in req.body) ||
+            !("telpon_kasir" in req.body) ||
+            !("password" in req.body)
+        ) {
+            respons(400, "Bad Request", "Unauthorized", res);
+            return;
         }
-        
     
-        db.query(sql,(error,result)=>{
-          //error
-            if(error){
-              console.error("Error executing query:",error)
-             return respons(401 ,error,"Unauthorized",res)
+        db.query(sql, values, (error, result) => {
+            // error
+            if (error) {
+                console.error("Error executing query:", error);
+                return respons(401, error, "Unauthorized", res);
             }
-            
-            //Success
-            if(result.affectedRows){ 
+    
+            // Success
+            if (result.affectedRows) {
                 const data = {
-                    isSuccess:result.affectedRows,
-                    id:result.insertId
-                    
-                }
-                console.log(result)
-                respons(201,data,"Data Successfully Added",res)
+                    isSuccess: result.affectedRows,
+                    id: result.insertId
+                };
+                console.log(result);
+                respons(201, data, "Data Successfully Added", res);
             }
-        })
-    }
+        });
+    };
+    
       
   // Put Registrasi
   const putRegistrasi = (req, res) => {
     const user = basicAuth(req)
     const id = req.params.id
-    const { nama_kasir, alamat_kasir, telepon_kasir } = req.body
+    const { nama_kasir, alamat_kasir, telpon_kasir } = req.body
   
     // Periksa apakah semua field pada body request tersedia
-    if (!nama_kasir || !alamat_kasir || !telepon_kasir) {
+    if (!nama_kasir || !alamat_kasir || !telpon_kasir) {
       return res.status(400).json({ error: "Bad Request" });
     }
   
-    const sql = `UPDATE kasir SET nama_kasir = ?, alamat_kasir = ?, telepon_kasir = ? WHERE id_kasir = ?`
-    const values = [nama_kasir, alamat_kasir, telepon_kasir, id]
+    const sql = `UPDATE kasir SET nama_kasir = ?, alamat_kasir = ?, telpon_kasir = ? WHERE id_kasir = ?`
+    const values = [nama_kasir, alamat_kasir, telpon_kasir, id]
     
   
     db.query(sql, values, (error, result) => {
