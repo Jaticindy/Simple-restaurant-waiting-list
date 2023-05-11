@@ -59,7 +59,7 @@ const getPesanan= (req, res) => {
                 const harga = menuResults[0].harga;
                 const total_harga = harga * jumlah_pesanan;
 
-                insertQuery += `(?, ?, ?, ?, ?, ?),`;
+                insertQuery += `(?, ?, ?, ?, ?, ?),`
                 insertValues.push(nomor_meja, kode_menu, jumlah_pesanan, harga, total_harga, id_kasir);
 
                 // Check if this is the last pesanan in the array
@@ -69,8 +69,9 @@ const getPesanan= (req, res) => {
 
                     db.query(insertQuery, insertValues, (error, result) => {
                         if (error) {
-                            console.error('Error executing query:', error);
-                            return res.status(500).json({ error: 'Internal Server Error' });
+                            console.error('Error executing query:', error)
+                            return respons(500,error,"Internal Server Error",res)
+                             
                         }
 
                         if (result.affectedRows) {
@@ -78,9 +79,10 @@ const getPesanan= (req, res) => {
                                 isSuccess: true,
                                 id_pesanan: result.insertId,
                             };
-                             respons(201, data, 'Created', res);
+                             respons(201, data, 'Created', res)
                         } else {
-                             res.status(500).json({ error: 'Failed to create pesanan' });
+                          respons(500,error,"Failed to create pesanan",res)
+                            
                         }
                         const id_pesanan = 123; // replace with your actual value
                         let statusQuery = `
