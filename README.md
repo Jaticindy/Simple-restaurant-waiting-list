@@ -62,6 +62,10 @@ Berikut ini adalah daftar endpoint API yang tersedia:
 
 - DELETE /menu/:id_menu - Menghapus menu berdasarkan ID menu
 
+# ERD
+
+![ERD](./ERD/ERD.jpg)
+
 # Penggunaan
 - Untuk endpoint KASIR ada beberapa metode HTTP ada get,post,pul,delete. didalam ada
 - get kasir bertugas, melihat nama nama kasir yang aktif.
@@ -91,3 +95,5 @@ Berikut ini adalah daftar endpoint API yang tersedia:
  -  
 # Lisensi
 Proyek
+
+
