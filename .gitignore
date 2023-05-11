@@ -3,9 +3,8 @@
 
 # Ignore folder named "node_modules"
 node_modules/
-final_projects.sql
+final_projects.sql/
 mysql.sql
-.gitignore
-.env
-ERD
-ERD.JPG
+.gitignore/
+.env/
+ERD/
