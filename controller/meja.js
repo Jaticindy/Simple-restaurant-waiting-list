@@ -83,10 +83,10 @@ const postMeja = ((req, res) => {
           } else {
             db.query('DELETE FROM meja WHERE nomor_meja = ?', id, (err, result) => {
               if (err) {
-                console.error(err);
-                res.status(500).send('Internal Server Error');
+                console.error(err)
+                respons (500,"","Internal Server Error",res)
               } else {
-                respons(200, "", 'Meja deleted successfully', res);
+                respons(200, "OK", 'Meja deleted successfully', res);
               }
             });
           }
