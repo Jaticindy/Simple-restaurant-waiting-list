@@ -52,7 +52,7 @@ const postMenu = (req, res) => {
 
 
 const putMenu = (req, res) => {
-    const user = basicAuth(req)
+    // const user = basicAuth(req)
     const id = req.params.id
     const { nama_menu, deskripsi_menu, harga } = req.body
   
@@ -61,7 +61,7 @@ const putMenu = (req, res) => {
       return res.status(400).json({ error: "Bad Request" });
     }
   
-    const sql = `UPDATE menu SET nama_menu = ?, deskripsi_menu = ?, harga = ? WHERE id_menu = ?`
+    const sql = `UPDATE menu SET nama_menu = ?, deskripsi_menu = ?, harga = ? WHERE id = ?`
     const values = [nama_menu, deskripsi_menu, harga, id]
     
   
@@ -75,7 +75,8 @@ const putMenu = (req, res) => {
         const data = {
           UpdateisSuccess: result.affectedRows,
         }
-        return res.status(200).json(data);
+        return  respons(200,data,"",res)
+        res.status(200).json(data);
       } else {
         return res.status(404).json({ error: "Not Found" });
       }

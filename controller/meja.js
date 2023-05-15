@@ -66,21 +66,35 @@ const postMeja = ((req, res) => {
     })
   }
   
-  const deleteMeja= (req, res) => {
-    const id = req.params.id
-    db.query('DELETE FROM meja WHERE nomor_meja = ?', id, (err, result) => {
+  const deleteMeja = (req, res) => {
+    const id = req.params.id;
+    
+    db.query('SELECT status_meja FROM meja WHERE nomor_meja = ?', id, (err, result) => {
       if (err) {
         console.error(err);
         res.status(500).send('Internal Server Error');
       } else {
-        if (result.affectedRows === 0) {
-          respons(404,"","Merja not found",res)
+        if (result.length === 0) {
+          respons(404, "", "Meja not found", res);
         } else {
-          respons(200,"",'Meja deleted successfully',res)
+          const statusMeja = result[0].status_meja;
+          if (statusMeja === 'terisi') {
+            respons(400, "", "Meja masih terisi", res);
+          } else {
+            db.query('DELETE FROM meja WHERE nomor_meja = ?', id, (err, result) => {
+              if (err) {
+                console.error(err);
+                res.status(500).send('Internal Server Error');
+              } else {
+                respons(200, "", 'Meja deleted successfully', res);
+              }
+            });
+          }
         }
       }
-    })
-  }
+    });
+  };
+  
   
 
 module.exports= {

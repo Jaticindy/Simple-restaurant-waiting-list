@@ -9,7 +9,7 @@ const uploadImage = require ('../middleware/multer')
 router.post ('/',(uploads.upload,uploadImage),controlerMenu.postMenu)
 
 //Put Menu
-router.put('/edit/:id',uploadImage,controlerMenu.putMenu)
+router.put('/edit/:id',controlerMenu.putMenu)
 
  // Delete menu
 router.delete('/:id',controlerMenu.deleteMenu)
